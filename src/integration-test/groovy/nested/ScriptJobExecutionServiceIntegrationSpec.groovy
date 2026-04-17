@@ -3,11 +3,15 @@ package nested
 import grails.testing.mixin.integration.Integration
 import spock.lang.Specification
 
+/**
+ * Proves that ScriptJobExecutionService's REQUIRES_NEW methods work correctly
+ * when the ScriptJobExecution record is committed to the DB before they are called.
+ * Both iterations should PASS.
+ */
 @Integration
-class ScripJobExecutionTransactionsSpec extends Specification {
+class ScriptJobExecutionServiceIntegrationSpec extends Specification {
 
     ScriptJobExecutionService scriptJobExecutionService
-    ScriptJobService scriptJobService
 
     def "ScriptJobExecution status is tracked through the job execution lifecycle"() {
         given: "a job execution persisted with SUBMITTED status"
@@ -26,7 +30,7 @@ class ScripJobExecutionTransactionsSpec extends Specification {
 
         when: "the job runs and completes or fails"
         try {
-            scriptJobService.execute(fail)
+            if (fail) throw new RuntimeException('Eeek')
             scriptJobExecutionService.markJobWithCompleted(id)
         } catch (RuntimeException ignored) {
             scriptJobExecutionService.markJobWithFailed(id)

@@ -33,6 +33,7 @@ class ScriptJobExecutionService {
     sje?.with {
       status = ScriptJobExecutionStatus.FAILED
       completedAt = new Date()
+      error = 'Some error'
       save(failOnError: true)
     }
   }
