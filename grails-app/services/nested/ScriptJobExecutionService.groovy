@@ -1,12 +1,16 @@
 package nested
 
 import grails.gorm.transactions.Transactional
+import groovy.transform.InheritConstructors
 import org.springframework.transaction.annotation.Propagation
 
 
 @Transactional
 class ScriptJobExecutionService {
 
+  @InheritConstructors
+  static class ScriptJobExecutionException extends RuntimeException {}
+  
   @Transactional(propagation = Propagation.REQUIRES_NEW)
   void markJobWithStarted(Serializable id) {
     def sje = ScriptJobExecution.get(id)
@@ -14,6 +18,7 @@ class ScriptJobExecutionService {
       status = ScriptJobExecutionStatus.EXECUTING
       startedAt = new Date()
       save(failOnError: true)
+      throw new ScriptJobExecutionException('Whaat')
     }
   }
 

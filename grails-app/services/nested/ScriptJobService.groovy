@@ -10,9 +10,15 @@ class ScriptJobService {
 
     ScriptJobExecutionService scriptJobExecutionService
 
+    @Transactional(noRollbackFor = [ScriptJobExecutionService.ScriptJobExecutionException])
     void execute(Serializable id, boolean fail = false) {
 
-        scriptJobExecutionService.markJobWithStarted(id)
+        try {
+          scriptJobExecutionService.markJobWithStarted(id)
+        } catch (e) {
+          log.warn("Failed to mark job with Started", e)
+          // You probably don't want to continue from here, as the entire execute transaction is marked for roll-back
+        }
 
         try {
           runScript(fail)

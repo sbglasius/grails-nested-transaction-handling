@@ -50,7 +50,7 @@ class ScriptJobQuartzJobSpec extends Specification {
 
         then:
         sje.status == expectedStatus
-        sje.startedAt != null
+        sje.startedAt == null // Because nested.ScriptJobExecutionService.markJobWithStarted fails
         sje.completedAt != null
 
         cleanup:
