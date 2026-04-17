@@ -61,10 +61,10 @@ class ScriptJobServiceIntegrationSpec extends Specification {
 
     then:
       verifyAll(sje) {
-        status == ScriptJobExecutionStatus.FAILED
+        status == ScriptJobExecutionStatus.PENDING_RETRY
         startedAt != null
         completedAt != null
-        error == 'Some error'
+        error == 'Eeek'
       }
 
     cleanup:

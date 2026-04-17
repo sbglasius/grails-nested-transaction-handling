@@ -14,6 +14,8 @@ enum ScriptJobExecutionStatus {
  /**Job completed successfully*/
  COMPLETED,
  /**Job failed during execution*/
- FAILED
+ FAILED,
+ /**Job failed but is scheduled for a retry attempt*/
+ PENDING_RETRY
 }
 

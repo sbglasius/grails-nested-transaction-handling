@@ -45,6 +45,6 @@ class ScriptJobExecutionServiceIntegrationSpec extends Specification {
         where:
         fail  | expectedStatus
         false | ScriptJobExecutionStatus.COMPLETED
-        true  | ScriptJobExecutionStatus.FAILED
+        true  | ScriptJobExecutionStatus.PENDING_RETRY
     }
 }

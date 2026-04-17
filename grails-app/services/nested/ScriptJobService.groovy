@@ -19,7 +19,7 @@ class ScriptJobService {
             scriptJobExecutionService.markJobWithCompleted(id)
         } catch (RuntimeException e) {
             log.warn("Execution failed: $e.message")
-            scriptJobExecutionService.markJobWithFailed(id)
+            scriptJobExecutionService.markJobWithFailed(id, e.message)
         }
 
     }
