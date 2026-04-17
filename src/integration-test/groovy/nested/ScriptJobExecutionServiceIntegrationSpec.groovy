@@ -23,7 +23,7 @@ class ScriptJobExecutionServiceIntegrationSpec extends Specification {
         }
 
         when: "the job is marked as started"
-        scriptJobExecutionService.markJobWithStarted(id)
+        scriptJobExecutionService.markJobWithStarted(id, 0)
 
         then: "status is EXECUTING"
         ScriptJobExecution.withNewSession { ScriptJobExecution.get(id) }.status == ScriptJobExecutionStatus.EXECUTING
@@ -32,8 +32,8 @@ class ScriptJobExecutionServiceIntegrationSpec extends Specification {
         try {
             if (fail) throw new RuntimeException('Eeek')
             scriptJobExecutionService.markJobWithCompleted(id)
-        } catch (RuntimeException ignored) {
-            scriptJobExecutionService.markJobWithFailed(id)
+        } catch (RuntimeException e) {
+            scriptJobExecutionService.markJobWithFailed(id, e.message)
         }
 
         then: "status reflects the outcome"

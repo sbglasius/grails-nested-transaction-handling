@@ -5,7 +5,9 @@ class ScriptJobExecution {
   Date submittedAt
   Date startedAt
   Date completedAt
-  String error 
+  String error
+  int retryCount = 0
+  int maxRetries = 3
 
   static constraints = {
     submittedAt nullable: true

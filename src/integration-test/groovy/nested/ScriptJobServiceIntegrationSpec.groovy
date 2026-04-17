@@ -64,7 +64,7 @@ class ScriptJobServiceIntegrationSpec extends Specification {
         status == ScriptJobExecutionStatus.FAILED
         startedAt != null
         completedAt != null
-        error == 'Some error'
+        error == 'Eeek'
       }
 
     cleanup:

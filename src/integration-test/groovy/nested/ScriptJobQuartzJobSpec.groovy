@@ -25,11 +25,12 @@ class ScriptJobQuartzJobSpec extends Specification {
     }
 
     def "quartz job drives the full execution lifecycle"() {
-        given: "a committed ScriptJobExecution"
+        given: "a committed ScriptJobExecution with retries disabled"
         def id = ScriptJobExecution.withNewTransaction {
             new ScriptJobExecution(
                 status: ScriptJobExecutionStatus.SUBMITTED,
-                submittedAt: new Date()
+                submittedAt: new Date(),
+                maxRetries: 0
             ).save(failOnError: true).id
         }
 
